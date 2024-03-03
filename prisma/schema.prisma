@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @unique
+  name          String
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  isSeller Boolean @default(false)
+  mode     Mode    @default(BUYER)
+
+
+  products      Product[]
+  cart          String[]
+  purchases     String[]
+  favorites     String[]
+  reviews       Review[]
+}
+
+model Product {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  category    String
+  subCategory String
+  price       Float
+  description String
+  images      Image[]
+  DownloadUrl String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews Review[]
+
+  seller   User?   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId String? @db.ObjectId
+}
+
+model Review {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  comment String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+}
+
+model Image {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  url         String
+  blurDataUrl String
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.ObjectId
+}
+
+model StripeCustomer {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String @unique
+  stripeCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Mode {
+  SELLER
+  BUYER
+}
