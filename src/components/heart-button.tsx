@@ -51,9 +51,9 @@ export const HeartButton = ({
       )}
     >
       {isFavorite ? (
-        <FaHeart className="w-[24px] h-[24px] text-rose-500" />
+        <FaHeart className="w-[20px] h-[20px] text-rose-500" />
       ) : (
-        <FaRegHeart className="w-[24px] h-[24px] text-gray-400" />
+        <FaRegHeart className="w-[20px] h-[20px] text-gray-400" />
       )}
       <motion.div
         variants={{
@@ -65,7 +65,7 @@ export const HeartButton = ({
         animate={animate}
         className="absolute inset-0 flex items-center justify-center -z-10"
       >
-        <FaHeart className="w-[24px] h-[24px] text-rose-500" />
+        <FaHeart className="w-[20px] h-[20px] text-rose-500" />
       </motion.div>
     </motion.div>
   );

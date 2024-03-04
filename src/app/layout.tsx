@@ -8,6 +8,7 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { currentUser } from "@/lib/current-user";
 import { ToastProvider } from "@/providers/toast-provider";
 import { ModalProvider } from "@/providers/modal-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,17 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn(inter.className, "flex flex-col")}>
-          <ToastProvider />
-          <ModalProvider />
-          <Header user={user} />
-          <main className="flex-1 pt-[75px]">{children}</main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ToastProvider />
+            <ModalProvider />
+            <Header user={user} />
+            <main className="flex-1 pt-[75px]">{children}</main>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

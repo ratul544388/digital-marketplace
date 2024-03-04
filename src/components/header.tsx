@@ -13,6 +13,7 @@ import { MaxWidthWrapper } from "./max-width-wrapper";
 import { MobileSidebar } from "./mobile-sidebar";
 import { buttonVariants } from "./ui/button";
 import { UserButton } from "./user-button";
+import { ThemeToggler } from "./theme-toggler";
 
 interface HeaderProps {
   user: User | null;
@@ -61,38 +62,41 @@ export const Header = ({ user }: HeaderProps) => {
             })}
           </nav>
         </div>
-        {isSignedIn ? (
-          <div className="flex items-center gap-6">
-            <Cart />
-            <UserButton mode={user?.mode!} />
-          </div>
-        ) : (
-          <div className="flex gap-5">
-            <SignUpButton>
-              <Link
-                href="/sign-in"
-                className={cn(
-                  buttonVariants({ size: "sm", variant: "ghost" }),
-                  "hidden sm:flex",
-                  isAuthRoute && "sm:hidden"
-                )}
-              >
-                Create an account
-              </Link>
-            </SignUpButton>
-            <SignInButton>
-              <Link
-                href="/sign-in"
-                className={cn(
-                  buttonVariants({ size: "sm" }),
-                  isAuthRoute && "hidden"
-                )}
-              >
-                Login
-              </Link>
-            </SignInButton>
-          </div>
-        )}
+        <div className="flex items-center gap-6">
+          <ThemeToggler />
+          {isSignedIn ? (
+            <>
+              <Cart />
+              <UserButton mode={user?.mode!} />
+            </>
+          ) : (
+            <>
+              <SignUpButton>
+                <Link
+                  href="/sign-in"
+                  className={cn(
+                    buttonVariants({ size: "sm", variant: "ghost" }),
+                    "hidden sm:flex",
+                    isAuthRoute && "sm:hidden"
+                  )}
+                >
+                  Create an account
+                </Link>
+              </SignUpButton>
+              <SignInButton>
+                <Link
+                  href="/sign-in"
+                  className={cn(
+                    buttonVariants({ size: "sm" }),
+                    isAuthRoute && "hidden"
+                  )}
+                >
+                  Login
+                </Link>
+              </SignInButton>
+            </>
+          )}
+        </div>
       </MaxWidthWrapper>
     </header>
   );

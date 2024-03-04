@@ -1,7 +1,8 @@
+import { FooterItemType } from "@/types";
 import { Mode } from "@prisma/client";
-import { FaIcons } from "react-icons/fa6";
-import { PiComputerTower, PiComputerTowerBold } from "react-icons/pi";
+import { FaFacebook, FaIcons, FaInstagram, FaTwitter } from "react-icons/fa6";
 import { IoFileTrayStackedOutline, IoHomeOutline } from "react-icons/io5";
+import { PiComputerTower } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
 
 export const transitionFee = 1.0;
@@ -45,3 +46,83 @@ export const categories = [
   "brand new",
   "tranding",
 ] as const;
+
+export const footerItems: FooterItemType[] = [
+  {
+    label: "Customer Service",
+    links: [
+      {
+        label: "FAQ",
+        href: "#",
+      },
+      {
+        label: "Return & refunds",
+        href: "#",
+      },
+      {
+        label: "Terms and conditions",
+        href: "#",
+      },
+      {
+        label: "Privacy Policy",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "Our Store",
+    links: [
+      {
+        label: "Store locations",
+        href: "#",
+      },
+      {
+        label: "Store hours",
+        href: "#",
+      },
+      {
+        label: "Store events",
+        href: "#",
+      },
+      {
+        label: "Support center",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "About us",
+    links: [
+      {
+        label: "Our story",
+        href: "#",
+      },
+      {
+        label: "News",
+        href: "#",
+      },
+      {
+        label: "Careers with us",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "Follow us",
+    isIcon: true,
+    links: [
+      {
+        icon: FaFacebook,
+        href: "#",
+      },
+      {
+        icon: FaTwitter,
+        href: "#",
+      },
+      {
+        icon: FaInstagram,
+        href: "#",
+      },
+    ],
+  },
+];

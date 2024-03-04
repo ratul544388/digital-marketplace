@@ -19,7 +19,7 @@ export default async function Home() {
         <span className="text-primary">digital assets.</span>
       </h1>
       <p className="text-muted-foreground text-center max-w-screen-sm">
-        Welcome to digital Digital Marketplace. Every asset on our platform is
+        Welcome to DigitalDepot Marketplace. Every asset on our platform is
         verified by our team to ensure our highest quality standards.
       </p>
       <div className="flex justify-center gap-4 mt-8">
