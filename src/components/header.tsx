@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ user }: HeaderProps) => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -61,12 +61,13 @@ export const Header = ({ user }: HeaderProps) => {
             })}
           </nav>
         </div>
-        {isSignedIn ? (
+        {isSignedIn && (
           <div className="flex items-center gap-6">
             <Cart />
             <UserButton mode={user?.mode!} />
           </div>
-        ) : (
+        )}
+        {!isSignedIn && isLoaded && (
           <div className="flex gap-5">
             <Link
               href="/sign-in"

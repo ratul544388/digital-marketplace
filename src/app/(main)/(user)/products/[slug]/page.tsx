@@ -31,7 +31,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
         <Link href="/products">Products</Link>
         <ArrowRight className="h-3.5 w-3.5" />
-        <h4 className="text-foreground">{product.name}</h4>
+        <h4 className="text-foreground line-clamp-1">{product.name}</h4>
       </div>
       <Separator />
       <section className="max-w-screen-lg mx-auto grid sm:grid-cols-2 gap-6 items-center justify-center">

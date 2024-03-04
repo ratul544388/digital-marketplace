@@ -39,12 +39,12 @@ export const HeartButton = ({
   return (
     <motion.div
       onClick={handleClick}
-      className={cn("cursor-pointer relative z-30", className)}
+      className={cn("cursor-pointer bg-background relative p-2 rounded-full z-30", className)}
     >
       {isFavorite ? (
-        <FaHeart className="w-[30px] h-[30px] text-rose-500" />
+        <FaHeart className="w-[28px] h-[28px] text-rose-500" />
       ) : (
-        <FaRegHeart className="w-[30px] h-[30px] text-rose-500" />
+        <FaRegHeart className="w-[28px] h-[28px] text-gray-400" />
       )}
       <motion.div
         variants={{
@@ -56,7 +56,7 @@ export const HeartButton = ({
         animate={animate}
         className="absolute inset-0 -z-10"
       >
-        <FaHeart className="w-[30px] h-[30px] text-rose-500" />
+        <FaHeart className="w-[28px] h-[28px] text-rose-500" />
       </motion.div>
     </motion.div>
   );

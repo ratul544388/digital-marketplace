@@ -40,7 +40,7 @@ export const MobileSidebar = ({ user }: { user: User | null }) => {
                 href={href}
                 key={label}
                 className={cn(
-                  "relative flex items-center gap-4 px-3 py-2.5 font-medium hover:bg-secondary transition-colors rounded-md",
+                  "relative flex items-center gap-4 px-3 py-2.5 font-medium hover:bg-secondary transition-colors rounded-md text-base",
                   isActive && "bg-secondary"
                 )}
               >
