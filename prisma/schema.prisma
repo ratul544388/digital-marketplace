@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String @unique
+  userId        String    @unique
   name          String
   email         String?   @unique
   emailVerified DateTime?
@@ -18,31 +18,30 @@ model User {
   isSeller Boolean @default(false)
   mode     Mode    @default(BUYER)
 
-
-  products      Product[]
-  cart          String[]
-  purchases     String[]
-  favorites     String[]
-  reviews       Review[]
+  products  Product[]
+  cart      String[]
+  purchases String[]
+  favorites String[]
+  reviews   Review[]
 }
 
 model Product {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
+  slug        String @unique
   category    String
-  subCategory String
   price       Float
   description String
   images      Image[]
-  DownloadUrl String
+  fileUrl     String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   reviews Review[]
 
-  seller   User?   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
-  sellerId String? @db.ObjectId
+  seller   User   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId String @db.ObjectId
 }
 
 model Review {

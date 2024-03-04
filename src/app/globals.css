@@ -75,6 +75,6 @@ body {
     @apply shadow-[0px_0px_3px_rgba(0,0,0,0.2)]
   }
   .shadow_lg {
-    @apply shadow-[0px_0px_5px_rgba(0,0,0,0.2)]
+    @apply shadow-[0px_0px_7px_rgba(0,0,0,0.2)]
   }
 }

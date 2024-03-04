@@ -1,17 +1,23 @@
 "use client";
 
+import { changeAccountMode } from "@/actions/change-account-mode";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { useClerk, useUser } from "@clerk/nextjs";
+import { Mode } from "@prisma/client";
 import { motion } from "framer-motion";
-import { LogOut, User2 } from "lucide-react";
+import { ArrowLeftRight, Heart, LogOut, User2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
+import { toast } from "react-toastify";
 import { Button } from "./ui/button";
 import { UserAvatar } from "./user-avatar";
 
-interface UserButtonProps {}
+interface UserButtonProps {
+  mode: Mode;
+}
 
-export const UserButton = ({}: UserButtonProps) => {
+export const UserButton = ({ mode }: UserButtonProps) => {
+  const [_, startTransition] = useTransition();
   const { isSignedIn, user } = useUser();
   const { signOut } = useClerk();
   const ref = useRef(null);
@@ -30,11 +36,37 @@ export const UserButton = ({}: UserButtonProps) => {
       onclick: () => router.push("/profile"),
     },
     {
+      label: "Favorites",
+      icon: Heart,
+      onclick: () => router.push("/favorites"),
+    },
+    {
+      label:
+        mode === "BUYER" ? "Switch to Seller Mode" : "Switch to Buyer Mode",
+      icon: ArrowLeftRight,
+      onclick: () => handleModeChange(),
+    },
+    {
       label: "Logout",
       icon: LogOut,
       onclick: () => signOut(() => router.push("/")),
     },
   ];
+
+  const handleModeChange = () => {
+    startTransition(() => {
+      changeAccountMode().then(({ success, mode, error }) => {
+        if (success) {
+          toast.success(`You are now on ${mode.toLowerCase()} mode`);
+          const url = mode === "SELLER" ? "/seller/dashboard" : "/";
+          router.push(url);
+          router.refresh();
+        } else {
+          toast.error(error);
+        }
+      });
+    });
+  };
 
   return (
     <div ref={ref} className="relative">
