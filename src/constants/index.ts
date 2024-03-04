@@ -1,7 +1,7 @@
 import { Mode } from "@prisma/client";
 import { FaIcons } from "react-icons/fa6";
 import { PiComputerTower, PiComputerTowerBold } from "react-icons/pi";
-import { IoFileTrayStackedOutline } from "react-icons/io5";
+import { IoFileTrayStackedOutline, IoHomeOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 
 export const transitionFee = 1.0;
@@ -21,6 +21,11 @@ export const navLinks = (mode?: Mode) => {
         },
       ]
     : [
+        {
+          label: "Home",
+          href: "/",
+          icon: IoHomeOutline,
+        },
         {
           label: "Ui Kits",
           href: "/products?category=ui kits",
