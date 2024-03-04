@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Image } from "./Image";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import EmptyCartImage from "@/../public/images/empty-cart.png"
 import { FaArrowRightLong } from "react-icons/fa6";
+import Image from "next/image";
 
 interface CartEmptyProps {
   onClose?: () => void;
@@ -14,9 +15,11 @@ export const CartEmpty = ({ onClose }: CartEmptyProps) => {
   return (
     <div className="h-full flex flex-col items-center p-8">
       <Image
-        src="/images/empty-cart.png"
+        src={EmptyCartImage}
+        width={300}
+        height={300}
         alt="Empty cart"
-        className="border-0 max-w-[250px]"
+        placeholder="blur"
       />
       <p className="mt-5 text-sm text-muted-foreground">Your cart is empty</p>
       <Link

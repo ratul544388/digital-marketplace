@@ -2,16 +2,17 @@
 
 import { navLinks } from "@/constants";
 import { cn } from "@/lib/utils";
-import { SignInButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Cart } from "./cart";
 import { Logo } from "./logo";
 import { MaxWidthWrapper } from "./max-width-wrapper";
+import { MobileSidebar } from "./mobile-sidebar";
 import { buttonVariants } from "./ui/button";
 import { UserButton } from "./user-button";
-import { Cart } from "./cart";
 
 interface HeaderProps {
   user: User | null;
@@ -28,8 +29,13 @@ export const Header = ({ user }: HeaderProps) => {
     <header className="fixed inset-x-0 top-0 z-50 border-b h-[60px]">
       <MaxWidthWrapper className="h-full flex items-center justify-between bg-background">
         <div className="flex items-center gap-8">
-          <Logo />
-          <nav className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            <div className="sm:hidden">
+              <MobileSidebar user={user} />
+            </div>
+            <Logo />
+          </div>
+          <nav className="sm:flex items-center gap-1 hidden">
             {navLinks(user?.mode).map(({ label, href }) => {
               const isActive =
                 pathname === href ||
@@ -55,11 +61,23 @@ export const Header = ({ user }: HeaderProps) => {
             })}
           </nav>
         </div>
-        <div className="flex items-center gap-4">
-          <Cart />
-          {isSignedIn ? (
+        {isSignedIn ? (
+          <div className="flex items-center gap-6">
+            <Cart />
             <UserButton mode={user?.mode!} />
-          ) : (
+          </div>
+        ) : (
+          <div className="flex gap-5">
+            <Link
+              href="/sign-in"
+              className={cn(
+                buttonVariants({ size: "sm", variant: "ghost" }),
+                "hidden sm:flex",
+                isAuthRoute && "sm:hidden"
+              )}
+            >
+              <SignUpButton>Create an account</SignUpButton>
+            </Link>
             <Link
               href="/sign-in"
               className={cn(
@@ -67,10 +85,10 @@ export const Header = ({ user }: HeaderProps) => {
                 isAuthRoute && "hidden"
               )}
             >
-              <SignInButton>Get Started</SignInButton>
+              <SignInButton>Login</SignInButton>
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </MaxWidthWrapper>
     </header>
   );

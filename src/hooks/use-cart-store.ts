@@ -6,6 +6,8 @@ interface ModalStore {
   setCart: (products: productWithImages[]) => void;
   addToCart: (product: productWithImages) => void;
   deleteCart: (productId: string) => void;
+  isPending: boolean;
+  setIsPending: (value: boolean) => void;
 }
 
 export const useCartStore = create<ModalStore>((set) => ({
@@ -19,4 +21,6 @@ export const useCartStore = create<ModalStore>((set) => ({
     set((state) => ({
       cart: state.cart.filter((item) => item.id !== productId),
     })),
+  isPending: true,
+  setIsPending: (value: boolean) => set({ isPending: value }),
 }));

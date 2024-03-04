@@ -1,13 +1,12 @@
-import { MotionButton } from "@/components/motion-button";
 import { MotionLink } from "@/components/motion-link";
 import { PageHeading } from "@/components/page-heading";
 import { Products } from "@/components/products";
-import { Button } from "@/components/ui/button";
+import { ProductSkeletons } from "@/components/skeletons/product-skeletons";
 import { Separator } from "@/components/ui/separator";
 import { currentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 import { PlusCircle } from "lucide-react";
-import React from "react";
+import { Suspense } from "react";
 
 const Page = async () => {
   const user = await currentUser();
@@ -29,7 +28,9 @@ const Page = async () => {
         </MotionLink>
       </div>
       <Separator />
-      {/* <Products products={products} user={user} /> */}
+      <Suspense fallback={<ProductSkeletons count={12} />}>
+        <Products products={products} user={user} />
+      </Suspense>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 
 import { getCart } from "@/actions/cart";
+import { transitionFee } from "@/constants";
+import { GetCartTotal } from "@/helper";
 import { useCartStore } from "@/hooks/use-cart-store";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
@@ -8,22 +10,18 @@ import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { CartEmpty } from "./cart-empty";
-import { CartItem } from "./cart-item";
+import { CartItems } from "./cart-items";
 import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { CartItems } from "./cart-items";
-import { GetCartTotal } from "@/helper";
-import { transitionFee } from "@/constants";
 
 interface CartProps {}
 
 export const Cart = ({}: CartProps) => {
   const [open, setOpen] = useState(false);
   const { user } = useUser();
-  const { cart, setCart } = useCartStore();
+  const { cart, setCart, setIsPending } = useCartStore();
   const [_, startTransition] = useTransition();
 
   const total = GetCartTotal();
@@ -34,13 +32,14 @@ export const Cart = ({}: CartProps) => {
         getCart().then(({ cart, error }) => {
           if (cart) {
             setCart(cart);
+            setIsPending(false);
           } else {
             toast.error(error);
           }
         });
       });
     }
-  }, [user, setCart]);
+  }, [user, setCart, setIsPending]);
 
   const handleClose = () => {
     setOpen(false);
@@ -49,9 +48,13 @@ export const Cart = ({}: CartProps) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="group relative hover:bg-transparent hover:text-primary"
+        >
           <ShoppingCart className="h-5 w-5" />
-          <span className="text-muted-foreground absolute -right-2">
+          <span className="text-muted-foreground group-hover:text-primary absolute -right-2">
             {cart.length}
           </span>
         </Button>

@@ -1,7 +1,5 @@
 "use client";
 
-import { CartEmpty } from "@/components/cart-empty";
-import { CartItem } from "@/components/cart-item";
 import { CartItems } from "@/components/cart-items";
 import { PageHeading } from "@/components/page-heading";
 import { Button } from "@/components/ui/button";
@@ -9,10 +7,16 @@ import { Separator } from "@/components/ui/separator";
 import { transitionFee } from "@/constants";
 import { GetCartTotal } from "@/helper";
 import { useCartStore } from "@/hooks/use-cart-store";
+import { Loader } from "@/loader";
 
 const CheckoutPage = () => {
-  const { cart } = useCartStore();
+  const { cart, isPending } = useCartStore();
   const total = GetCartTotal();
+
+  if (isPending) {
+    return <Loader />;
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <PageHeading>Shopping Cart</PageHeading>
