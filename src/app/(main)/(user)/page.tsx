@@ -23,10 +23,10 @@ export default async function Home() {
         verified by our team to ensure our highest quality standards.
       </p>
       <div className="flex justify-center gap-4 mt-8">
-        <MotionLink href="/">Browse Tranding</MotionLink>
+        <MotionLink href="/products">Browse Tranding</MotionLink>
         <Link
           className={cn(buttonVariants({ variant: "ghost" }), "group")}
-          href="/"
+          href="/products"
         >
           Our Quality Promise
           <ArrowRight className="h-4 w-4 text-muted-foreground ml-2 group-hover:translate-x-1 transition duration-300" />
@@ -35,21 +35,21 @@ export default async function Home() {
       <CategorySection
         title="Brand new"
         description="Explore more than 10000 icons and ui kits to use in websites, logos and social media"
-        shopAllUrl="/explore"
+        shopAllUrl="/products"
         products={brandNew}
         user={user}
       />
       <CategorySection
         title="UI Kits"
         description="Get started building professional looking web apps"
-        shopAllUrl="/explore"
+        shopAllUrl="/products"
         products={uiKits}
         user={user}
       />
       <CategorySection
         title="Icons"
         description="Upgrade you designs with high qulity icon sets"
-        shopAllUrl="/explore"
+        shopAllUrl="/products"
         products={icons}
         user={user}
       />

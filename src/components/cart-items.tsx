@@ -8,14 +8,13 @@ import { useTransition } from "react";
 import { cartAction } from "@/actions/cart";
 import { X } from "lucide-react";
 import { CartEmpty } from "./cart-empty";
+import Link from "next/link";
 
 interface CartItemsProps {
-    onClose?: () => void;
+  onClose?: () => void;
 }
 
-export const CartItems = ({
-    onClose,
-}: CartItemsProps) => {
+export const CartItems = ({ onClose }: CartItemsProps) => {
   const { cart, setCart, deleteCart } = useCartStore();
   const [_, startTransition] = useTransition();
   const handleRemove = (productId: string) => {
@@ -45,7 +44,13 @@ export const CartItems = ({
           />
           <div className="text-sm w-full">
             <div className="flex items-center justify-between gap-5">
-              <h3 className="font-medium">{product.name}</h3>
+              <Link
+                onClick={onClose}
+                href={`/products/${product.slug}`}
+                className="font-medium line-clamp-2 hover:underline"
+              >
+                {product.name}
+              </Link>
               <p className="font-medium">${product.price}</p>
             </div>
             <p className="text-muted-foreground">{product.category}</p>

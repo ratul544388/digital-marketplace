@@ -34,8 +34,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <h4 className="text-foreground line-clamp-1">{product.name}</h4>
       </div>
       <Separator />
-      <section className="max-w-screen-lg mx-auto grid sm:grid-cols-2 gap-6 items-center justify-center">
-        <div className="ml-auto">
+      <section className="max-w-screen-lg w-full mx-auto grid sm:grid-cols-2 gap-8 items-center">
+        <div className=" w-full">
           <h1 className="font-bold text-3xl">{product.name}</h1>
           <div className="flex items-center gap-3 mt-2">
             <h5 className="font-semibold">${product.price}</h5>

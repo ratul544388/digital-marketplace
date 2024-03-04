@@ -35,7 +35,7 @@ export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
 
 
   return (
-    <Button onClick={handleClick} className="w-full mt-5">
+    <Button onClick={handleClick} className="w-full max-w-[400px] mt-5">
       {isAddedToCart ? "Added to cart" : "Add to cart"}
     </Button>
   );

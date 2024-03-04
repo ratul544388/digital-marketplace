@@ -61,33 +61,36 @@ export const Header = ({ user }: HeaderProps) => {
             })}
           </nav>
         </div>
-        {isSignedIn && (
+        {isSignedIn ? (
           <div className="flex items-center gap-6">
             <Cart />
             <UserButton mode={user?.mode!} />
           </div>
-        )}
-        {!isSignedIn && isLoaded && (
+        ) : (
           <div className="flex gap-5">
-            <Link
-              href="/sign-in"
-              className={cn(
-                buttonVariants({ size: "sm", variant: "ghost" }),
-                "hidden sm:flex",
-                isAuthRoute && "sm:hidden"
-              )}
-            >
-              <SignUpButton>Create an account</SignUpButton>
-            </Link>
-            <Link
-              href="/sign-in"
-              className={cn(
-                buttonVariants({ size: "sm" }),
-                isAuthRoute && "hidden"
-              )}
-            >
-              <SignInButton>Login</SignInButton>
-            </Link>
+            <SignUpButton>
+              <Link
+                href="/sign-in"
+                className={cn(
+                  buttonVariants({ size: "sm", variant: "ghost" }),
+                  "hidden sm:flex",
+                  isAuthRoute && "sm:hidden"
+                )}
+              >
+                Create an account
+              </Link>
+            </SignUpButton>
+            <SignInButton>
+              <Link
+                href="/sign-in"
+                className={cn(
+                  buttonVariants({ size: "sm" }),
+                  isAuthRoute && "hidden"
+                )}
+              >
+                Login
+              </Link>
+            </SignInButton>
           </div>
         )}
       </MaxWidthWrapper>
