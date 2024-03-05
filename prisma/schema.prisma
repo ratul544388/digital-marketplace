@@ -15,12 +15,13 @@ model User {
   emailVerified DateTime?
   image         String?
 
-  isSeller Boolean @default(false)
-  mode     Mode    @default(BUYER)
+  mode Mode @default(BUYER)
 
-  products  Product[]
+  products Product[]
+  sales    OrderItem[]
+
   cart      String[]
-  purchases String[]
+  orders    Order[]
   favorites String[]
   reviews   Review[]
 }
@@ -28,7 +29,7 @@ model User {
 model Product {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  slug        String @unique
+  slug        String  @unique
   category    String
   price       Float
   description String
@@ -40,8 +41,8 @@ model Product {
 
   reviews Review[]
 
-  seller   User   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId String @db.ObjectId
+  seller   User   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 }
 
 model Review {
@@ -66,6 +67,33 @@ model Image {
 
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String  @db.ObjectId
+}
+
+model Order {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderItems OrderItem[]
+  isPaid     Boolean     @default(false)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+}
+
+model OrderItem {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  image       String
+  blurDataUrl String
+  slug        String
+  category    String
+  price       Float
+  createdAt   DateTime @default(now())
+  fileUrl     String
+
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String @db.ObjectId
+
+  seller   User?   @relation(fields: [sellerId], references: [id])
+  sellerId String? @db.ObjectId
 }
 
 model StripeCustomer {

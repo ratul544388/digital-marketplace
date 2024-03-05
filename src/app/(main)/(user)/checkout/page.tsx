@@ -8,9 +8,10 @@ import { transitionFee } from "@/constants";
 import { GetCartTotal } from "@/helper";
 import { useCartStore } from "@/hooks/use-cart-store";
 import { Loader } from "@/loader";
+import { CheckoutButton } from "./_components/checkout-button";
 
 const CheckoutPage = () => {
-  const { cart, isPending } = useCartStore();
+  const { isPending } = useCartStore();
   const total = GetCartTotal();
 
   if (isPending) {
@@ -41,9 +42,7 @@ const CheckoutPage = () => {
               ${(total + transitionFee).toFixed(2)}
             </p>
           </div>
-          <Button className="w-full" disabled={!!!cart.length}>
-            Checkout
-          </Button>
+          <CheckoutButton />
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
 import { UserAvatar } from "./user-avatar";
+import { cn } from "@/lib/utils";
 
 interface UserButtonProps {
   mode: Mode;
@@ -39,6 +40,7 @@ export const UserButton = ({ mode }: UserButtonProps) => {
       label: "Favorites",
       icon: Heart,
       onclick: () => router.push("/favorites"),
+      buyerOnly: true,
     },
     {
       label:
@@ -94,7 +96,7 @@ export const UserButton = ({ mode }: UserButtonProps) => {
             <h3 className="font-medium">{user.fullName}</h3>
           </div>
         </div>
-        {items.map(({ label, icon: Icon, onclick }) => (
+        {items.map(({ label, icon: Icon, onclick, buyerOnly }) => (
           <Button
             onClick={() => {
               onclick();
@@ -102,7 +104,10 @@ export const UserButton = ({ mode }: UserButtonProps) => {
             }}
             variant="ghost"
             key={label}
-            className="w-full rounded-none justify-start gap-4"
+            className={cn(
+              "w-full rounded-none justify-start gap-4",
+              buyerOnly && mode === "SELLER" && "hidden"
+            )}
           >
             <Icon className="h-4 w-4 text-muted-foreground" />
             {label}

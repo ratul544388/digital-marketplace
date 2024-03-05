@@ -28,11 +28,13 @@ export const ProductCard = ({ product, user }: ProductCardProps) => {
         <p className="text-muted-foreground mt-1">{product.category}</p>
         <h3 className="font-bold mt-1">${product.price}</h3>
       </div>
-      <HeartButton
-        className="absolute top-0.5 right-0.5"
-        initialFavorite={!!initialFavorite}
-        productId={product.id}
-      />
+      {user?.mode !== "SELLER" && (
+        <HeartButton
+          className="absolute top-0.5 right-0.5"
+          initialFavorite={!!initialFavorite}
+          productId={product.id}
+        />
+      )}
     </Link>
   );
 };
