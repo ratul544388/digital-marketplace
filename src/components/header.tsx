@@ -14,6 +14,7 @@ import { MobileSidebar } from "./mobile-sidebar";
 import { buttonVariants } from "./ui/button";
 import { UserButton } from "./user-button";
 import { ThemeToggler } from "./theme-toggler";
+import { SearchInput } from "./search-input";
 
 interface HeaderProps {
   user: User | null;
@@ -27,7 +28,7 @@ export const Header = ({ user }: HeaderProps) => {
   const isAuthRoute = ["/sign-in", "/sign-up"].includes(pathname);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b h-[60px]">
+    <header className="fixed inset-x-0 top-0 z-[9999] border-b h-[60px]">
       <MaxWidthWrapper className="h-full flex items-center justify-between bg-background">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
@@ -62,11 +63,12 @@ export const Header = ({ user }: HeaderProps) => {
             })}
           </nav>
         </div>
+        {/* <SearchInput type="button"/> */}
         <div className="flex items-center gap-6">
           <ThemeToggler />
           {isSignedIn ? (
             <>
-              {user?.mode !== "SELLER" && <Cart />}
+              {user?.mode !== "SELLER" && pathname !== "/checkout" && <Cart />}
               <UserButton mode={user?.mode!} />
             </>
           ) : (

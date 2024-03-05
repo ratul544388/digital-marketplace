@@ -6,7 +6,7 @@ import Image from "next/image";
 
 interface UserAvatarProps {
   alt?: string | null;
-  src: string;
+  src: string
   className?: string;
 }
 

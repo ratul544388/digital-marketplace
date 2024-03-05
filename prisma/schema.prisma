@@ -11,6 +11,7 @@ model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   userId        String    @unique
   name          String
+  username      String    @unique
   email         String?   @unique
   emailVerified DateTime?
   image         String?
@@ -79,7 +80,7 @@ model Order {
 }
 
 model OrderItem {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   image       String
   blurDataUrl String

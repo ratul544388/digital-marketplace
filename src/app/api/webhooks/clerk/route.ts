@@ -60,8 +60,10 @@ export async function POST(req: Request) {
         name: `${payload.data.first_name || "Anonymous"} ${
           payload.data.last_name || ""
         }`,
+        username: `${payload.data.username}`,
         email: payload.data.email_addresses[0].email_address,
         image: payload.data.image_url,
+        
       },
     });
   }

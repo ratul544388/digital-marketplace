@@ -1,6 +1,6 @@
 "use client";
 
-import { getCart } from "@/actions/cart";
+import { cartAction, getCart } from "@/actions/cart";
 import { transitionFee } from "@/constants";
 import { GetCartTotal } from "@/helper";
 import { useCartStore } from "@/hooks/use-cart-store";
@@ -10,11 +10,13 @@ import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { CartItems } from "./cart-items";
+import { CartItem } from "./cart-item";
 import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { InfoBlock } from "./info-block";
+import { CartEmpty } from "./cart-empty";
 
 interface CartProps {}
 
@@ -25,6 +27,19 @@ export const Cart = ({}: CartProps) => {
   const [_, startTransition] = useTransition();
 
   const total = GetCartTotal();
+
+  const handleRemove = (productId: string) => {
+    const prevCart = cart;
+    const newCart = cart.filter((item) => item.id !== productId);
+    setCart(newCart);
+    startTransition(() => {
+      cartAction(productId).then(({ error }) => {
+        if (error) {
+          setCart(prevCart);
+        }
+      });
+    });
+  };
 
   useEffect(() => {
     if (user) {
@@ -64,26 +79,28 @@ export const Cart = ({}: CartProps) => {
           {`Cart(${cart.length})`}
         </div>
         <ScrollArea className={cn("h-[calc(100vh_-_48px)] pt-3")}>
-          <CartItems onClose={handleClose} />
+          {cart.map((product) => (
+            <CartItem
+              key={product.id}
+              onRemove={() => handleRemove(product.id)}
+              name={product.name}
+              price={product.price}
+              category={product.category}
+              slug={product.slug}
+              image={product.images[0].url}
+              blurDataUrl={product.images[0].blurDataUrl}
+            />
+          ))}
+          {!!!cart.length && <CartEmpty />}
           {!!cart.length && (
-            <div className="p-4">
+            <div className="p-4 flex flex-col gap-2">
               <Separator />
-              <div className="flex justify-between text-muted-foreground mt-2">
-                Fiat Transition Fee:
-                <p className="text-foreground font-medium">
-                  ${transitionFee.toFixed(2)}
-                </p>
-              </div>
-              <div className="flex justify-between text-muted-foreground mt-1">
-                Total:
-                <p className="text-foreground font-medium">
-                  ${(total + transitionFee).toFixed(2)}
-                </p>
-              </div>
+              <InfoBlock label="Fiat Transion Fee" value={transitionFee} />
+              <InfoBlock label="Total" value={total + transitionFee} />
               <Link
                 onClick={handleClose}
                 href="/checkout"
-                className={cn(buttonVariants(), "mt-4 w-full")}
+                className={cn(buttonVariants(), "mt-2 w-full")}
               >
                 Continue to checkout
               </Link>

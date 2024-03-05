@@ -11,6 +11,7 @@ import { useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
 import { UserAvatar } from "./user-avatar";
+import { BiPurchaseTagAlt } from "react-icons/bi";
 import { cn } from "@/lib/utils";
 
 interface UserButtonProps {
@@ -23,6 +24,7 @@ export const UserButton = ({ mode }: UserButtonProps) => {
   const { signOut } = useClerk();
   const ref = useRef(null);
   const [open, setOpen] = useState(false);
+
   const router = useRouter();
   useOnClickOutside(ref, () => setOpen(false));
 
@@ -34,12 +36,18 @@ export const UserButton = ({ mode }: UserButtonProps) => {
     {
       label: "Profile",
       icon: User2,
-      onclick: () => router.push("/profile"),
+      onclick: () => router.push(`/profile/${user.username}`),
     },
     {
       label: "Favorites",
       icon: Heart,
       onclick: () => router.push("/favorites"),
+      buyerOnly: true,
+    },
+    {
+      label: "My Purchases",
+      icon: BiPurchaseTagAlt,
+      onclick: () => router.push("/my-purchases"),
       buyerOnly: true,
     },
     {

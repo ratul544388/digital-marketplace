@@ -7,6 +7,8 @@ import { RxDashboard } from "react-icons/rx";
 
 export const transitionFee = 1.0;
 
+
+
 export const navLinks = (mode?: Mode) => {
   return mode === "SELLER"
     ? [

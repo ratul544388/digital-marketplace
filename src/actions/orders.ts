@@ -3,7 +3,38 @@
 import { currentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+import { absoluteUrl } from "@/lib/utils";
 import Stripe from "stripe";
+
+export async function getOrders({
+  userId,
+  myOrders,
+}: { userId?: string; myOrders?: boolean } = {}) {
+  const user = await currentUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const orders = await db.order.findMany({
+    where: {
+      ...(myOrders
+        ? {
+            userId: user.id,
+          }
+        : {}),
+    },
+    include: {
+      orderItems: {
+        include: {
+          seller: true,
+        },
+      },
+    },
+  });
+
+  return orders;
+}
 
 export async function checkout({ orderId }: { orderId?: string } = {}) {
   try {
@@ -107,8 +138,8 @@ export async function checkout({ orderId }: { orderId?: string } = {}) {
       customer: stripeCustomer.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/${orderId}?status=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/${orderId}?status=canceled`,
+      success_url: absoluteUrl(`/checkout/${order.id}?status=success`),
+      cancel_url: absoluteUrl("/"),
       metadata: {
         orderId: order.id,
         userId: user.id,

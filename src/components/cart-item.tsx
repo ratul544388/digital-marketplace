@@ -1,57 +1,95 @@
 "use client";
 
-import { productWithImages } from "@/types";
+import { X } from "lucide-react";
+import Link from "next/link";
 import { Image } from "./Image";
 import { Button } from "./ui/button";
-import { useCartStore } from "@/hooks/use-cart-store";
-import { useTransition } from "react";
-import { cartAction } from "@/actions/cart";
-import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { UserAvatar } from "./user-avatar";
+import { User } from "@prisma/client";
+import { Sue_Ellen_Francisco } from "next/font/google";
 
 interface CartItemProps {
-  product: productWithImages;
+  name: string;
+  slug?: string;
+  category: string;
+  onRemove?: () => void;
+  price: number;
+  image: string;
+  blurDataUrl: string;
+  className?: string;
+  seller?: User | null;
+  fileUrl?: string;
 }
 
-export const CartItem = ({ product }: CartItemProps) => {
-  const { cart, setCart, deleteCart } = useCartStore();
-  const [_, startTransition] = useTransition();
-  const handleRemove = (productId: string) => {
-    const prevCart = cart;
-    deleteCart(productId);
-    startTransition(() => {
-      cartAction(productId).then(({ error }) => {
-        if (error) {
-          setCart(prevCart);
-        }
-      });
-    });
-  };
-
+export const CartItem = ({
+  name,
+  slug,
+  category,
+  onRemove,
+  price,
+  blurDataUrl,
+  image,
+  className,
+  seller,
+  fileUrl,
+}: CartItemProps) => {
   return (
     <div
-      key={product.id}
-      className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+      className={cn(
+        "relative flex text-sm h-fit items-center gap-3 px-3 py-2 hover:bg-secondary transition-colors",
+        className
+      )}
     >
       <Image
-        src={product.images[0].url}
-        alt={product.name}
-        blurDataURL={product.images[0].blurDataUrl}
-        className="max-w-[80px]"
+        src={image}
+        alt={name}
+        blurDataURL={blurDataUrl}
+        className="max-w-[100px]"
       />
       <div className="text-sm w-full">
-        <div className="flex items-center justify-between gap-5">
-          <h3 className="font-medium">{product.name}</h3>
-          <p className="font-medium">${product.price}</p>
+        {slug ? (
+          <Link
+            href={`/products/${slug}`}
+            className="font-medium line-clamp-2 hover:underline"
+          >
+            {name}
+          </Link>
+        ) : (
+          <h3 className="font-medium line-clamp-2">{name}</h3>
+        )}
+        {onRemove && (
+          <button
+            onClick={onRemove}
+            className="absolute top-2 right-2 p-2 rounded-full mt-1 h-fit text-muted-foreground hover:bg-background"
+          >
+            <X className="h-4 w-4 text-muted-foreground" />
+          </button>
+        )}
+        <p className="font-semibold mt-1">${price.toFixed(2)}</p>
+        <p className="text-muted-foreground mt-1">{category}</p>
+        <div className="flex items-center justify-between">
+          {seller && (
+            <div className="gap-2 flex mt-1.5 text-xs text-muted-foreground">
+              Seller:
+              <Link
+                target="_blank"
+                href={`/profile/${seller.id}`}
+                className="text-foreground hover:underline"
+              >
+                {seller.name}
+              </Link>
+            </div>
+          )}
+          {fileUrl && (
+            <Link
+              href={fileUrl}
+              className="font-medium mt-1 text-sm text-primary underline"
+            >
+              Download Assets
+            </Link>
+          )}
         </div>
-        <p className="text-muted-foreground">{product.category}</p>
-        <Button
-          onClick={() => handleRemove(product.id)}
-          className="h-7 px-2 mt-1 text-muted-foreground"
-          variant="ghost"
-        >
-          <X className="h-4 w-4 mr-2 text-muted-foreground" />
-          Remove
-        </Button>
       </div>
     </div>
   );
