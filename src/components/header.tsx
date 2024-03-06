@@ -5,23 +5,23 @@ import { cn } from "@/lib/utils";
 import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import { motion } from "framer-motion";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Cart } from "./cart";
 import { Logo } from "./logo";
 import { MaxWidthWrapper } from "./max-width-wrapper";
 import { MobileSidebar } from "./mobile-sidebar";
+import { ThemeToggler } from "./theme-toggler";
 import { buttonVariants } from "./ui/button";
 import { UserButton } from "./user-button";
-import { ThemeToggler } from "./theme-toggler";
-import { SearchInput } from "./search-input";
 
 interface HeaderProps {
   user: User | null;
 }
 
 export const Header = ({ user }: HeaderProps) => {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -48,7 +48,7 @@ export const Header = ({ user }: HeaderProps) => {
                   href={href}
                   key={label}
                   className={cn(
-                    "relative text-sm font-medium px-4 py-1.5 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
+                    "relative whitespace-nowrap text-sm font-medium px-4 py-1.5 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
                   )}
                 >
                   {label}
@@ -62,8 +62,29 @@ export const Header = ({ user }: HeaderProps) => {
               );
             })}
           </nav>
+          {pathname !== "/search" && (
+            <>
+              <Link
+                href="/search"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "gap-20 justify-between group hidden lg:flex"
+                )}
+              >
+                <span className="text-muted-foreground">
+                  Explore Icons and Logos...
+                </span>
+                <Search className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </Link>
+              <Link
+                href="/search"
+                className="lg:hidden text-muted-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-accent"
+              >
+                <Search className="h-5 w-5" />
+              </Link>
+            </>
+          )}
         </div>
-        {/* <SearchInput type="button"/> */}
         <div className="flex items-center gap-6">
           <ThemeToggler />
           {isSignedIn ? (
