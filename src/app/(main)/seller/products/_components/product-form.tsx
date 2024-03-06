@@ -71,7 +71,7 @@ export const ProductForm = ({ product, title }: ProductFormProps) => {
             if (success) {
               toast.success(success);
               form.reset();
-              router.push('/seller/products')
+              router.push("/seller/products");
               router.refresh();
             } else {
               toast.error(error);
@@ -83,7 +83,7 @@ export const ProductForm = ({ product, title }: ProductFormProps) => {
           if (success) {
             toast.success(success);
             form.reset();
-            router.push('/seller/products')
+            router.push("/seller/products");
             router.refresh();
           } else {
             toast.error(error);
@@ -153,7 +153,7 @@ export const ProductForm = ({ product, title }: ProductFormProps) => {
                     value={field.value}
                     onChange={field.onChange}
                     placeholder="Select category"
-                    options={categories.map((item) => item)}
+                    options={categories.slice(2).map((item) => item)}
                   />
                 </FormControl>
                 <FormMessage />
