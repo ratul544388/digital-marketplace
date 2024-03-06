@@ -89,7 +89,7 @@ export const Header = ({ user }: HeaderProps) => {
           <ThemeToggler />
           {isSignedIn ? (
             <>
-              {user?.mode !== "SELLER" && pathname !== "/checkout" && <Cart />}
+              {user?.mode !== "SELLER" && <Cart />}
               <UserButton mode={user?.mode!} />
             </>
           ) : (
