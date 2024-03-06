@@ -62,7 +62,7 @@ export const Header = ({ user }: HeaderProps) => {
               );
             })}
           </nav>
-          {pathname !== "/search" && (
+          {pathname !== "/search" && user?.mode !== "SELLER" && (
             <>
               <Link
                 href="/search"

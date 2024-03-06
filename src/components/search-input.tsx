@@ -1,14 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
-import { use, useEffect, useRef, useState } from "react";
-import { RotateCounterClockwiseIcon } from "@radix-ui/react-icons";
+import { Input } from "./ui/input";
 
 interface SearchInputProps {
   className?: string;

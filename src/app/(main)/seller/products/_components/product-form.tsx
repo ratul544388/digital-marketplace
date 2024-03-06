@@ -153,7 +153,7 @@ export const ProductForm = ({ product, title }: ProductFormProps) => {
                     value={field.value}
                     onChange={field.onChange}
                     placeholder="Select category"
-                    options={categories.slice(2).map((item) => item)}
+                    options={categories.slice(0, 2).map((item) => item)}
                   />
                 </FormControl>
                 <FormMessage />
