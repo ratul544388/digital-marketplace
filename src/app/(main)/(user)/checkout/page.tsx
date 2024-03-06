@@ -39,21 +39,24 @@ const CheckoutPage = () => {
     <div className="flex flex-col gap-8">
       <PageHeading>Shopping Cart</PageHeading>
       <div className="grid w-full md:grid-cols-2 gap-12 md:gap-20 max-w-[800px] mx-auto">
-        <div className="flex flex-col gap-5">
-          {cart.map(({ name, price, category, images, id }) => (
-            <CartItem
-              key={id}
-              name={name}
-              category={category}
-              price={price}
-              image={images[0].url}
-              blurDataUrl={images[0].blurDataUrl}
-              onRemove={() => handleRemove(id)}
-              className="bg-secondary"
-            />
-          ))}
-        </div>
-        {!!!cart.length && <CartEmpty />}
+        {!!cart.length ? (
+          <div className="flex flex-col gap-5">
+            {cart.map(({ name, price, category, images, id }) => (
+              <CartItem
+                key={id}
+                name={name}
+                category={category}
+                price={price}
+                image={images[0].url}
+                blurDataUrl={images[0].blurDataUrl}
+                onRemove={() => handleRemove(id)}
+                className="bg-secondary"
+              />
+            ))}
+          </div>
+        ) : (
+          <CartEmpty />
+        )}
         <div className="p-6 w-full h-fit flex flex-col gap-5 rounded-md bg-secondary text-sm font-medium">
           <h3 className="font-bold text-base">Order summary</h3>
           <InfoBlock label="Subtotal" value={total} />
