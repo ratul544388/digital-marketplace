@@ -47,7 +47,7 @@ const SearchPage = async ({
         Search your favorites icons or logos and get it now
       </p>
       <SearchInput className="mb-8" />
-      <Suspense fallback={<ProductSkeletons count={12} key={Math.random()} />}>
+      <Suspense fallback={<ProductSkeletons count={12} />} key={Math.random()}>
         <Await promise={promise}>
           {(products) => <Products products={products} user={user} />}
         </Await>
