@@ -25,6 +25,7 @@ import { productWithImages } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useTransition } from "react";
 import { toast } from "react-toastify";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ProductFormProps {
   product?: productWithImages;
@@ -185,7 +186,7 @@ export const ProductForm = ({ product, title }: ProductFormProps) => {
               <FormItem className="md:col-span-2">
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input
+                  <Textarea
                     disabled={isPending}
                     placeholder="Description"
                     {...field}

@@ -24,7 +24,7 @@ export async function getProductBySlug(slug: string) {
 export async function getProducts({
   category,
   favorites,
-  take = 12,
+  take,
 }: {
   category?: (typeof categories)[number];
   favorites?: string[];

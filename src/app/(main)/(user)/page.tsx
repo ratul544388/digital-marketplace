@@ -9,9 +9,9 @@ import Link from "next/link";
 
 export default async function Home() {
   const user = await currentUser();
-  const brandNew = await getProducts({ category: "brand new" });
-  const uiKits = await getProducts({ category: "ui kits" });
-  const icons = await getProducts({ category: "icons" });
+  const brandNew = await getProducts({ category: "brand new", take: 6 });
+  const uiKits = await getProducts({ category: "ui kits", take: 6 });
+  const icons = await getProducts({ category: "icons", take: 6 });
   return (
     <div className="h-full flex flex-col items-center pt-16">
       <h1 className="font-bold text-5xl text-center leading-[56px] max-w-screen-sm">

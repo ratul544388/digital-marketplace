@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="h-full">
-      <MaxWidthWrapper className="min-h-screen pb-32">{children}</MaxWidthWrapper>
+      <MaxWidthWrapper className="min-h-screen pb-40">{children}</MaxWidthWrapper>
       <Footer/>
     </div>
   );

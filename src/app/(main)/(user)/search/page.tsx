@@ -4,8 +4,7 @@ import { SearchInput } from "@/components/search-input";
 import { ProductSkeletons } from "@/components/skeletons/product-skeletons";
 import { currentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 const SearchPage = async ({
   searchParams,
