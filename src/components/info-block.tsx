@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 
 interface InfoBlockProps {
   label: string;
@@ -10,9 +10,14 @@ interface InfoBlockProps {
 
 export const InfoBlock = ({ label, value, className }: InfoBlockProps) => {
   return (
-    <div className={cn("flex items-center justify-between text-muted-foreground", className)}>
+    <div
+      className={cn(
+        "flex items-center justify-between text-muted-foreground",
+        className
+      )}
+    >
       {label}
-      <p className="text-foreground">${value.toFixed(2)}</p>
+      <p className="text-foreground">{formatPrice(value)}</p>
     </div>
   );
 };

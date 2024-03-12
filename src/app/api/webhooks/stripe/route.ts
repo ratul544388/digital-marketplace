@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 import { stripe } from "@/lib/stripe";
+import { sendEmail } from "@/actions/send-email";
 
 export async function POST(req: Request) {
   console.log("called");
@@ -37,6 +38,9 @@ export async function POST(req: Request) {
       where: {
         id: orderId,
       },
+      include: {
+        orderItems: true,
+      },
     });
 
     if (!order) {
@@ -45,12 +49,22 @@ export async function POST(req: Request) {
       });
     }
 
-    await db.order.update({
+    await db.user.update({
       where: {
-        id: orderId,
+        id: userId,
       },
       data: {
-        isPaid: true,
+        cart: [],
+        orders: {
+          update: {
+            where: {
+              id: orderId,
+            },
+            data: {
+              isPaid: true,
+            },
+          },
+        },
       },
     });
 

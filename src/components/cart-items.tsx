@@ -1,14 +1,14 @@
 "use client";
 
-import { productWithImages } from "@/types";
-import { Image } from "./Image";
-import { Button } from "./ui/button";
-import { useCartStore } from "@/hooks/use-cart-store";
-import { useTransition } from "react";
 import { cartAction } from "@/actions/cart";
+import { useCartStore } from "@/hooks/use-cart-store";
+import { formatPrice } from "@/lib/utils";
 import { X } from "lucide-react";
-import { CartEmpty } from "./cart-empty";
 import Link from "next/link";
+import { useTransition } from "react";
+import { Image } from "./Image";
+import { CartEmpty } from "./cart-empty";
+import { Button } from "./ui/button";
 
 interface CartItemsProps {
   onClose?: () => void;
@@ -51,7 +51,7 @@ export const CartItems = ({ onClose }: CartItemsProps) => {
               >
                 {product.name}
               </Link>
-              <p className="font-medium">${product.price}</p>
+              <p className="font-medium">{formatPrice(product.price)}</p>
             </div>
             <p className="text-muted-foreground">{product.category}</p>
             <Button

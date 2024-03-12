@@ -1,4 +1,4 @@
-import { Image, Product } from "@prisma/client";
+import { Image, Order, OrderItem, Product } from "@prisma/client";
 import { IconType } from "react-icons/lib";
 
 export type productWithImages = Product & {
@@ -12,5 +12,11 @@ export type FooterItemType = {
     label?: string;
     icon?: IconType;
     href: string;
-  }[]
+  }[];
+};
+
+export type FullOrderType = Order & {
+  orderItems: (OrderItem & {
+    product: productWithImages;
+  })[];
 };
