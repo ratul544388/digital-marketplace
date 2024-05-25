@@ -33,13 +33,6 @@ export default async function Home() {
         </Link>
       </div>
       <CategorySection
-        title="Brand new"
-        description="Explore more than 10000 icons and ui kits to use in websites, logos and social media"
-        shopAllUrl="/products"
-        products={brandNew}
-        user={user}
-      />
-      <CategorySection
         title="UI Kits"
         description="Get started building professional looking web apps"
         shopAllUrl="/products"
